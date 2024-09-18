@@ -6,7 +6,7 @@ object camion {
 		
 	method cargar(cosa) {
 		cosas.add(cosa)
-		cosas.forEach({cosa => cosa.reaccionarACarga()})
+		cosa.reaccionarACarga()
 	}
 
 	method descargar(cosa) {
@@ -38,11 +38,11 @@ object camion {
 	}
 
 	method objetosQueSuperanPeligrosidad(nivel) {
-		return cosas.filter({cosa => cosa.nivel() > nivel})
+		return cosas.filter({cosa => cosa.nivelPeligrosidad() > nivel})
 	}
 
 	method objetosMasPeligrososQue(cosa) {
-		return cosas.filter({carga => carga.nivel() > cosa.nivel()})
+		return cosas.filter({carga => carga.nivelPeligrosidad() > cosa.nivelPeligrosidad()})
 	}
 
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad) {

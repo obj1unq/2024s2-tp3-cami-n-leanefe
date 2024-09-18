@@ -1,5 +1,58 @@
+import cosas.*
 import camion.*
+describe "Mensajes del camión" {
+    test "todoPesoPar" {
+        camion.cargar(bumblebee)
+        paqueteLadrillos.cantLadrillos(200)
+        camion.cargar(paqueteLadrillos)
+        assert.that(camion.todoPesoPar())
+        residuosRadiactivos.peso(70) 
+        camion.cargar(residuosRadiactivos) // 70+15 al reaccionar
+        assert.notThat(camion.todoPesoPar())
+    }
 
-//TESTS CON METODOS: todoPesoPar, hayAlgunoQuePesa, elDeNivel, excedidoDePeso, objetosMasPeligrososQue, puedeCircularEnRuta
+    test "hayAlgunoQuePesa" {
+        camion.cargar(bumblebee)
+        assert.that(camion.hayAlgunoQuePesa(800))
+        assert.notThat(camion.hayAlgunoQuePesa(100))
+    }
 
-//AGREGADOS 
+    test "elDeNivel" {
+        camion.cargar(bumblebee) // nivel 30 xq se transforma en robot
+        camion.cargar(paqueteLadrillos)
+        assert.equals(bumblebee, camion.elDeNivel(30))
+    }
+
+    test "objetosMasPeligrososQue" {
+        camion.cargar(residuosRadiactivos)
+        camion.cargar(bumblebee)
+        camion.cargar(knightRider)
+        camion.cargar(paqueteLadrillos)
+        assert.equals(#{residuosRadiactivos, bumblebee}, camion.objetosMasPeligrososQue(knightRider))
+    }
+
+    test "excedidoDePeso y puedeCircularEnRuta" {
+        camion.cargar(bumblebee)            //+ 800
+        camion.cargar(knightRider)          //+ 500
+        paqueteLadrillos.cantLadrillos(300)
+        camion.cargar(paqueteLadrillos)     //+ 624
+        assert.equals(1924, camion.pesoDeCarga())
+        assert.that(camion.excedidoDePeso())
+        camion.descargar(paqueteLadrillos)
+        assert.equals(1300,camion.pesoDeCarga())
+        assert.notThat(camion.excedidoDePeso())
+        assert.notThat(camion.puedeCircularEnRuta(15))
+        camion.descargar(bumblebee)
+        assert.that(camion.puedeCircularEnRuta(15))
+    }
+
+    test "tieneAlgoQuePesaEntre y totalBultos" {
+        residuosRadiactivos.peso(500)
+        camion.cargar(residuosRadiactivos) // 1 bulto
+        camion.cargar(bumblebee)           // 2 bultos
+        camion.cargar(knightRider)         // 1 bulto
+        assert.that(camion.tieneAlgoQuePesaEntre(600,1000))
+        assert.notThat(camion.tieneAlgoQuePesaEntre(1000, 2000))
+        assert.equals(4, camion.totalBultos())
+    }
+}

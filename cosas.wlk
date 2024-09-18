@@ -6,12 +6,19 @@ object knightRider {
 }
 
 object bumblebee {
-	var property transformado = false 
-	// Transformado: false == auto, true == robot.
+	var property estado = auto
 	method peso() { return 800 }
-	method nivelPeligrosidad() { return if (transformado) 30 else 15 }
+	method nivelPeligrosidad() { return estado.nivelPeligrosidad() }
 	method bulto() { return 2 }
-	method reaccionarACarga() { transformado = true }
+	method reaccionarACarga() { estado = robot }
+}
+
+object robot {
+	method nivelPeligrosidad() { return 30 }
+}
+
+object auto {
+	method nivelPeligrosidad() { return 15 }
 }
 
 object paqueteLadrillos {
@@ -44,6 +51,10 @@ object bateriaAntiaerea {
 object contenedor {
 	
 	const property cosas = #{}
+
+	method agregar(cosa) {
+		cosas.add(cosa)
+	}
 
 	method peso() { 
 		return 100 + self.pesoDeCosas() 
