@@ -1,0 +1,8 @@
+import camion.*
+import cosas.*
+
+//TESTEAR contenedor y residuos con cosas que tienen diferentes pesos/niveles de peligrosidad.
+
+//AGREGADO bulto de ladrillos, bultos de contenedor.
+
+//REACCION A CARGA
