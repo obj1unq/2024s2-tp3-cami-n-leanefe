@@ -1,0 +1,57 @@
+import camion.*
+import cosas.*
+import caminos.*
+import destinos.*
+describe "Transporte" {
+    test "No puede viajar por exceso de peso" {
+        residuosRadiactivos.peso(1501)
+        camion.cargar(residuosRadiactivos)
+        assert.throwsException({camion.transportar(almacen,ruta9)})
+        assert.equals(#{residuosRadiactivos}, camion.cosas())
+        assert.equals(#{}, almacen.cosas())
+    }
+
+    test "No puede viajar por caminos vecinales, por exceder límite de peso del camino" {
+        residuosRadiactivos.peso(800)
+        camion.cargar(residuosRadiactivos)
+        assert.that(not camion.excedidoDePeso())
+        caminosVecinales.pesoMaxSoportado(1600)
+        assert.throwsException({camion.transportar(almacen,caminosVecinales)})
+        assert.equals(#{residuosRadiactivos}, camion.cosas())
+        assert.equals(#{}, almacen.cosas())
+    }
+
+    test "No puede viajar por ruta 9, por exceder nivel de peligrosidad del camino" {
+        camion.cargar(bumblebee)
+        assert.that(not camion.excedidoDePeso())
+        assert.throwsException({camion.transportar(almacen,ruta9)})
+        assert.equals(#{bumblebee}, camion.cosas())
+        assert.equals(#{}, almacen.cosas())
+    }
+
+    test "No puede viajar por superar la cantidad máxima de bultos del almacen" {
+        almacen.maximoDeBultos(3)
+        almacen.agregar(arenaAGranel)
+        assert.equals(1, almacen.cantBultos())
+        camion.cargar(bumblebee)
+        camion.cargar(knightRider)
+        assert.equals(3, camion.totalBultos())
+        assert.throwsException({camion.transportar(almacen,ruta9)})
+        assert.equals(#{bumblebee, knightRider}, camion.cosas())
+        assert.equals(#{arenaAGranel}, almacen.cosas())
+    }
+
+    test "Llega a destino y descarga sin problemas" {
+        assert.equals(0, almacen.cantBultos())
+        arenaAGranel.peso(30)
+        camion.cargar(arenaAGranel)
+        paqueteLadrillos.cantLadrillos(100)
+        camion.cargar(paqueteLadrillos)
+        assert.that(not camion.excedidoDePeso())
+        caminosVecinales.pesoMaxSoportado(2500)
+        almacen.maximoDeBultos(3)
+        assert.doesNotThrowException({camion.transportar(almacen,caminosVecinales)})
+        assert.equals(#{}, camion.cosas())
+        assert.equals(#{arenaAGranel, paqueteLadrillos}, almacen.cosas())
+    }
+}

@@ -2,6 +2,7 @@ import camion.*
 import cosas.*
 
 describe "Cambios de estado de las cosas" {
+    
     test "Bumblebee" {
         bumblebee.estado(auto)
         assert.equals(15, bumblebee.nivelPeligrosidad())

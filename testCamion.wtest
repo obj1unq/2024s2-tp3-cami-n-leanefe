@@ -1,6 +1,7 @@
 import cosas.*
 import camion.*
 describe "Mensajes del camión" {
+    
     test "todoPesoPar" {
         camion.cargar(bumblebee)
         paqueteLadrillos.cantLadrillos(200)
