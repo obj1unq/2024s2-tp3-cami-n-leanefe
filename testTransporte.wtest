@@ -3,6 +3,9 @@ import cosas.*
 import caminos.*
 import destinos.*
 describe "Transporte" {
+
+    const camion = new Camion()
+
     test "No puede viajar por exceso de peso" {
         residuosRadiactivos.peso(1501)
         camion.cargar(residuosRadiactivos)

@@ -3,6 +3,8 @@ import cosas.*
 
 describe "Cambios de estado de las cosas" {
     
+    const camion = new Camion()
+
     test "Bumblebee" {
         bumblebee.estado(auto)
         assert.equals(15, bumblebee.nivelPeligrosidad())
@@ -55,7 +57,7 @@ describe "Cambios de estado de las cosas" {
 
     test "Embalaje Seguridad" {
         residuosRadiactivos.peso(80)
-        embalajeSeguridad.cosaQueEnvuelve(residuosRadiactivos)
+        const embalajeSeguridad = new EmbalajeSeguridad(cosaQueEnvuelve = residuosRadiactivos)
         assert.equals(80, embalajeSeguridad.peso())
         assert.equals(100, embalajeSeguridad.nivelPeligrosidad())
     }

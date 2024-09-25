@@ -2,9 +2,11 @@ import cosas.*
 import caminos.*
 import destinos.*
 
-object camion {
+class Camion {
 
 	const property cosas = #{}
+	const tara = 1000
+	const pesoMaximo = 2500
 		
 	method cargar(cosa) {
 		cosas.add(cosa)
@@ -28,7 +30,7 @@ object camion {
 	}
 
 	method pesoTotal() {
-		return 1000 + self.pesoDeCarga()
+		return tara + self.pesoDeCarga()
 	}
 
 	method pesoDeCarga() {
@@ -36,7 +38,7 @@ object camion {
 	}
 
 	method excedidoDePeso() {
-		return self.pesoTotal() > 2500
+		return self.pesoTotal() > pesoMaximo
 	}
 
 	method objetosQueSuperanPeligrosidad(nivel) {

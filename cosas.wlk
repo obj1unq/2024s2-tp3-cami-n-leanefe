@@ -92,8 +92,8 @@ object residuosRadiactivos {
 	method reaccionarACarga() { peso += 15 }
 }
 
-object embalajeSeguridad {
-	var property cosaQueEnvuelve = knightRider
+class EmbalajeSeguridad {
+	var property cosaQueEnvuelve
 	method peso() { return cosaQueEnvuelve.peso() }
 	method nivelPeligrosidad() { return cosaQueEnvuelve.nivelPeligrosidad() / 2 }
 	method bulto() { return 2 }

@@ -1,6 +1,8 @@
 import cosas.*
 import camion.*
 describe "Mensajes del camión" {
+
+    const camion = new Camion()
     
     test "todoPesoPar" {
         camion.cargar(bumblebee)
