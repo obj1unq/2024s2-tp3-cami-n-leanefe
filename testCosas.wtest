@@ -1,0 +1,62 @@
+import camion.*
+import cosas.*
+
+describe "Cambios de estado de las cosas" {
+    
+    test "Bumblebee" {
+        bumblebee.estado(auto)
+        assert.equals(15, bumblebee.nivelPeligrosidad())
+        camion.cargar(bumblebee) // para cambiar estado
+        assert.equals(robot, bumblebee.estado())
+        assert.equals(30, bumblebee.nivelPeligrosidad())
+    }
+
+    test "Paquete ladrillos" {
+        paqueteLadrillos.cantLadrillos(15)
+        assert.equals(1, paqueteLadrillos.bulto())
+        paqueteLadrillos.cantLadrillos(295)
+        assert.equals(2, paqueteLadrillos.bulto())
+        camion.cargar(paqueteLadrillos) // por reaccion (pasan a ser 295+12=307)
+        assert.equals(3, paqueteLadrillos.bulto())
+    }
+
+    test "ArenaAGranel" {
+        arenaAGranel.peso(100)
+        camion.cargar(arenaAGranel)
+        assert.equals(120, arenaAGranel.peso())
+    }
+
+    test "Batería Antiaerea" {
+        bateriaAntiaerea.tieneMisiles(false)
+        assert.equals(200, bateriaAntiaerea.peso())
+        assert.equals(0, bateriaAntiaerea.nivelPeligrosidad())
+        assert.equals(1, bateriaAntiaerea.bulto())
+        camion.cargar(bateriaAntiaerea) // reacciona agregando misiles
+        assert.equals(300, bateriaAntiaerea.peso())
+        assert.equals(100, bateriaAntiaerea.nivelPeligrosidad())
+        assert.equals(2, bateriaAntiaerea.bulto())
+    }
+
+    test "Contenedor" {
+        assert.equals(0, contenedor.nivelPeligrosidad())
+        contenedor.agregar(knightRider)
+        contenedor.agregar(bumblebee)
+        assert.equals(1400, contenedor.peso())
+        assert.equals(15, contenedor.nivelPeligrosidad())
+        camion.cargar(contenedor)
+        assert.equals(robot, bumblebee.estado())
+    }
+
+    test "Residuos radiactivos" {
+        residuosRadiactivos.peso(100)
+        camion.cargar(residuosRadiactivos)
+        assert.equals(115, residuosRadiactivos.peso())
+    }
+
+    test "Embalaje Seguridad" {
+        residuosRadiactivos.peso(80)
+        embalajeSeguridad.cosaQueEnvuelve(residuosRadiactivos)
+        assert.equals(80, embalajeSeguridad.peso())
+        assert.equals(100, embalajeSeguridad.nivelPeligrosidad())
+    }
+}
