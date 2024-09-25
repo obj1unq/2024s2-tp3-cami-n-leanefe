@@ -17,4 +17,10 @@ object almacen {
     method cantBultos() {
 		return cosas.sum({cosa => cosa.bulto()})
 	}
+
+    method validarTransporte(camion) {
+        if (not self.puedeDescargar(camion)) {
+            self.error("No puede descargarse el camión en el destino. Superaría el máximo de bultos de " + maximoDeBultos)
+        }
+    }
 }

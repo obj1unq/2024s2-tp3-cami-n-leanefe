@@ -44,7 +44,7 @@ object camion {
 	}
 
 	method objetosMasPeligrososQue(cosa) {
-		return cosas.filter({carga => carga.nivelPeligrosidad() > cosa.nivelPeligrosidad()})
+		return self.objetosQueSuperanPeligrosidad(cosa.nivelPeligrosidad())
 	}
 
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad) {
@@ -52,7 +52,7 @@ object camion {
 	}
 
 	method hayObjetosQueSuperanPeligrosidad(nivel) {
-		return self.objetosQueSuperanPeligrosidad(nivel).size() > 0
+		return not self.objetosQueSuperanPeligrosidad(nivel).isEmpty()
 	}
 
 	method tieneAlgoQuePesaEntre(min, max) {
@@ -79,22 +79,12 @@ object camion {
 
 	method validarTransporte(destino, camino) {
 		self.validarPeso()
-		self.validarCamino(camino)
-		self.validarDestino(destino)
+		camino.validarTransporte(self)
+		destino.validarTransporte(self)
 	}
 
 	method validarPeso() {
 		return if (self.excedidoDePeso()) 
 			self.error("No se puede transportar el camión por exceso de peso (" + self.pesoTotal() + "kg.)")
-	}
-
-	method validarCamino(camino) {
-		return if (not camino.soportaViaje(self)) 
-			self.error("El camino no soporta el viaje.")
-	}
-
-	method validarDestino(destino) {
-		return if (not destino.puedeDescargar(self)) 
-			self.error("No puede descargarse el camión en el destino.")
 	}
 }
